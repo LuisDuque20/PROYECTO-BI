@@ -1,0 +1,84 @@
+Iniciando replica: lun 02 nov 2026 22:05:29 CST
+#######################################################################
+WARNING:  no libwebkitgtk-1.0 detected, some features will be unavailable
+    Consider installing the package with apt-get or yum.
+    e.g. 'sudo apt-get install libwebkitgtk-1.0-0'
+#######################################################################
+Nov 02, 2026 10:05:29 PM sun.util.locale.provider.LocaleProviderAdapter <clinit>
+INFO: Invalid locale provider adapter "COMPAT" ignored.
+Nov 02, 2026 10:05:29 PM sun.util.locale.provider.LocaleProviderAdapter <clinit>
+WARNING: COMPAT locale provider has been removed
+2026-11-02 22:05:30.720 - Kitchen - Logging is at level : Basic
+2026-11-02 22:05:30.729 - Kitchen - Start of run.
+2026-11-02 22:05:32.153 - job_replica_stg - Start of job execution
+2026-11-02 22:05:32.244 - job_replica_stg - Starting entry [Transformation]
+2026-11-02 22:05:32.350 - Transformation - Using run configuration [Pentaho local]
+2026-11-02 22:05:32.364 - Carte - Installing timer to purge stale objects after 1440 minutes.
+2026-11-02 22:05:32.366 - Transformation - Iniciado despacho de la transformaci�n [trf_replica_stg]
+2026-11-02 22:05:32.415 - out_departamento.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_contratacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_cargo.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_pais.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_registro_asistencia.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_tipo_contrato.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_baja_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.416 - out_satisfaccion_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.416 - out_capacitacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_condicion_laboral.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_historial_laboral.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.416 - out_vacaciones.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.415 - out_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.416 - out_ciudad.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:32.416 - out_evaluacion_desempeno.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-02 22:05:33.850 - xls_tipo_contrato.0 - Procesamiento finalizado (I=4, O=0, R=0, W=4, U=0, E=0)
+2026-11-02 22:05:33.851 - xls_cargo.0 - Procesamiento finalizado (I=10, O=0, R=0, W=10, U=0, E=0)
+2026-11-02 22:05:33.854 - xls_departamento.0 - Procesamiento finalizado (I=7, O=0, R=0, W=7, U=0, E=0)
+2026-11-02 22:05:33.856 - fecha_carga_departamento.0 - Procesamiento finalizado (I=0, O=0, R=7, W=7, U=0, E=0)
+2026-11-02 22:05:33.856 - xls_ciudad.0 - Procesamiento finalizado (I=12, O=0, R=0, W=12, U=0, E=0)
+2026-11-02 22:05:33.857 - fecha_carga_cargo.0 - Procesamiento finalizado (I=0, O=0, R=10, W=10, U=0, E=0)
+2026-11-02 22:05:33.859 - fecha_carga_ciudad.0 - Procesamiento finalizado (I=0, O=0, R=12, W=12, U=0, E=0)
+2026-11-02 22:05:33.860 - fecha_carga_tipo_contrato.0 - Procesamiento finalizado (I=0, O=0, R=4, W=4, U=0, E=0)
+2026-11-02 22:05:33.887 - xls_pais.0 - Procesamiento finalizado (I=5, O=0, R=0, W=5, U=0, E=0)
+2026-11-02 22:05:33.889 - fecha_carga_pais.0 - Procesamiento finalizado (I=0, O=0, R=5, W=5, U=0, E=0)
+2026-11-02 22:05:33.889 - xls_condicion_laboral.0 - Procesamiento finalizado (I=5, O=0, R=0, W=5, U=0, E=0)
+2026-11-02 22:05:33.891 - fecha_carga_condicion_laboral.0 - Procesamiento finalizado (I=0, O=0, R=5, W=5, U=0, E=0)
+2026-11-02 22:05:33.931 - xls_baja_empleado.0 - Procesamiento finalizado (I=23, O=0, R=0, W=23, U=0, E=0)
+2026-11-02 22:05:33.934 - fecha_carga_baja_empleado.0 - Procesamiento finalizado (I=0, O=0, R=23, W=23, U=0, E=0)
+2026-11-02 22:05:34.015 - xls_empleado.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-02 22:05:34.017 - fecha_carga_empleado.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-02 22:05:34.036 - xls_capacitacion.0 - Procesamiento finalizado (I=196, O=0, R=0, W=196, U=0, E=0)
+2026-11-02 22:05:34.038 - fecha_carga_capacitacion.0 - Procesamiento finalizado (I=0, O=0, R=196, W=196, U=0, E=0)
+2026-11-02 22:05:34.042 - xls_evaluacion_desempeno.0 - Procesamiento finalizado (I=281, O=0, R=0, W=281, U=0, E=0)
+2026-11-02 22:05:34.043 - xls_contratacion.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-02 22:05:34.044 - fecha_carga_evaluacion_desempeno.0 - Procesamiento finalizado (I=0, O=0, R=281, W=281, U=0, E=0)
+2026-11-02 22:05:34.048 - fecha_carga_contratacion.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-02 22:05:34.056 - xls_historial_laboral.0 - Procesamiento finalizado (I=176, O=0, R=0, W=176, U=0, E=0)
+2026-11-02 22:05:34.058 - fecha_carga_historial_laboral.0 - Procesamiento finalizado (I=0, O=0, R=176, W=176, U=0, E=0)
+2026-11-02 22:05:34.063 - xls_vacaciones.0 - Procesamiento finalizado (I=207, O=0, R=0, W=207, U=0, E=0)
+2026-11-02 22:05:34.066 - fecha_carga_vacaciones.0 - Procesamiento finalizado (I=0, O=0, R=207, W=207, U=0, E=0)
+2026-11-02 22:05:34.076 - xls_satisfaccion_empleado.0 - Procesamiento finalizado (I=272, O=0, R=0, W=272, U=0, E=0)
+2026-11-02 22:05:34.079 - fecha_carga_satisfaccion_empleado.0 - Procesamiento finalizado (I=0, O=0, R=272, W=272, U=0, E=0)
+2026-11-02 22:05:34.105 - xls_registro_asistencia.0 - Procesamiento finalizado (I=450, O=0, R=0, W=450, U=0, E=0)
+2026-11-02 22:05:34.107 - fecha_carga_registro_asistencia.0 - Procesamiento finalizado (I=0, O=0, R=450, W=450, U=0, E=0)
+2026-11-02 22:05:34.379 - out_tipo_contrato.0 - Procesamiento finalizado (I=0, O=4, R=4, W=4, U=0, E=0)
+2026-11-02 22:05:34.379 - out_condicion_laboral.0 - Procesamiento finalizado (I=0, O=5, R=5, W=5, U=0, E=0)
+2026-11-02 22:05:34.380 - out_ciudad.0 - Procesamiento finalizado (I=0, O=12, R=12, W=12, U=0, E=0)
+2026-11-02 22:05:34.388 - out_cargo.0 - Procesamiento finalizado (I=0, O=10, R=10, W=10, U=0, E=0)
+2026-11-02 22:05:34.388 - out_pais.0 - Procesamiento finalizado (I=0, O=5, R=5, W=5, U=0, E=0)
+2026-11-02 22:05:34.396 - out_departamento.0 - Procesamiento finalizado (I=0, O=7, R=7, W=7, U=0, E=0)
+2026-11-02 22:05:34.398 - out_baja_empleado.0 - Procesamiento finalizado (I=0, O=23, R=23, W=23, U=0, E=0)
+2026-11-02 22:05:34.408 - out_contratacion.0 - Procesamiento finalizado (I=0, O=150, R=150, W=150, U=0, E=0)
+2026-11-02 22:05:34.411 - out_capacitacion.0 - Procesamiento finalizado (I=0, O=196, R=196, W=196, U=0, E=0)
+2026-11-02 22:05:34.421 - out_empleado.0 - Procesamiento finalizado (I=0, O=150, R=150, W=150, U=0, E=0)
+2026-11-02 22:05:34.431 - out_evaluacion_desempeno.0 - Procesamiento finalizado (I=0, O=281, R=281, W=281, U=0, E=0)
+2026-11-02 22:05:34.438 - out_satisfaccion_empleado.0 - Procesamiento finalizado (I=0, O=272, R=272, W=272, U=0, E=0)
+2026-11-02 22:05:34.440 - out_vacaciones.0 - Procesamiento finalizado (I=0, O=207, R=207, W=207, U=0, E=0)
+2026-11-02 22:05:34.443 - out_historial_laboral.0 - Procesamiento finalizado (I=0, O=176, R=176, W=176, U=0, E=0)
+2026-11-02 22:05:34.447 - out_registro_asistencia.0 - Procesamiento finalizado (I=0, O=450, R=450, W=450, U=0, E=0)
+2026-11-02 22:05:34.454 - job_replica_stg - Starting entry [Success]
+2026-11-02 22:05:34.456 - job_replica_stg - Finished job entry [Success] (result=[true])
+2026-11-02 22:05:34.456 - job_replica_stg - Finished job entry [Transformation] (result=[true])
+2026-11-02 22:05:34.456 - job_replica_stg - Job execution finished
+2026-11-02 22:05:34.458 - Kitchen - Finished!
+2026-11-02 22:05:34.459 - Kitchen - Start=2026/11/02 22:05:32.149, Stop=2026/11/02 22:05:34.459
+2026-11-02 22:05:34.459 - Kitchen - Processing ended after 2 seconds.

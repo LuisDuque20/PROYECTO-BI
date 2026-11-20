@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation><info><name>trf_facts_2</name><description>Carga de fact_evaluacion y fact_asistencia (departamento/cargo por periodo del historial con fallback al mas cercano)</description><extended_description/><trans_version/><trans_type>Normal</trans_type><directory>/</directory><parameters></parameters><size_rowset>10000</size_rowset><sleep_time_empty>50</sleep_time_empty><sleep_time_full>50</sleep_time_full><unique_connections>N</unique_connections><feedback_shown>Y</feedback_shown><feedback_size>50000</feedback_size><using_thread_priorities>Y</using_thread_priorities><shared_objects_file/><capture_step_performance>N</capture_step_performance><step_performance_capturing_delay>1000</step_performance_capturing_delay><step_performance_capturing_size_limit>100</step_performance_capturing_size_limit><created_user>-</created_user><modified_user>-</modified_user></info><notepads></notepads><connection><name>conn_rrhh_dw</name><server>${DB_HOST}</server><type>POSTGRESQL</type><access>Native</access><database>${DB_NAME}</database><port>${DB_PORT}</port><username>${DB_USER}</username><password>${DB_PASS}</password><servername/><data_tablespace/><index_tablespace/><attributes><attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute><attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute><attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute><attribute><code>PORT_NUMBER</code><attribute>${DB_PORT}</attribute></attribute><attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute><attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute><attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute><attribute><code>USE_POOLING</code><attribute>N</attribute></attribute></attributes></connection><order><hop><from>tin_evaluacion</from><to>fc_evaluacion</to><enabled>Y</enabled></hop><hop><from>fc_evaluacion</from><to>out_fact_evaluacion</to><enabled>Y</enabled></hop><hop><from>tin_asistencia</from><to>fc_asistencia</to><enabled>Y</enabled></hop><hop><from>fc_asistencia</from><to>out_fact_asistencia</to><enabled>Y</enabled></hop></order><step><name>tin_evaluacion</name><type>TableInput</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><connection>conn_rrhh_dw</connection><sql>WITH cand AS (
+    SELECT ev.evaluacion_id,
+           h.departamento_id,
+           h.cargo_id,
+           ROW_NUMBER() OVER (
+               PARTITION BY ev.evaluacion_id
+               ORDER BY (h.fecha_inicio &lt;= ev.fecha_evaluacion) DESC,
+                        CASE WHEN h.fecha_inicio &lt;= ev.fecha_evaluacion THEN h.fecha_inicio END DESC NULLS LAST,
+                        h.fecha_inicio ASC
+           ) AS rn
+    FROM stg.evaluacion_desempeno ev
+    JOIN stg.historial_laboral h ON h.empleado_id = ev.empleado_id
+)
+SELECT
+    ev.evaluacion_id,
+    de.empleado_key,
+    t.fecha_key                         AS fecha_key,
+    COALESCE(dd.departamento_key, -1)   AS departamento_key,
+    COALESCE(dg.cargo_key, -1)          AS cargo_key,
+    ev.evaluacion_desempeno             AS categoria_desempeno,
+    ev.puntuacion
+FROM stg.evaluacion_desempeno ev
+LEFT JOIN cand c                ON c.evaluacion_id = ev.evaluacion_id AND c.rn = 1
+LEFT JOIN dwh.dim_empleado     de ON de.empleado_id     = ev.empleado_id
+LEFT JOIN dwh.dim_tiempo       t  ON t.fecha            = ev.fecha_evaluacion
+LEFT JOIN dwh.dim_departamento dd ON dd.departamento_id = c.departamento_id
+LEFT JOIN dwh.dim_cargo        dg ON dg.cargo_id        = c.cargo_id</sql><limit>0</limit><lookup/><execute_each_row>N</execute_each_row><variables_active>N</variables_active><lazy_conversion_active>N</lazy_conversion_active><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>120</xloc><yloc>80</yloc><draw>Y</draw></GUI></step><step><name>fc_evaluacion</name><type>SystemInfo</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><fields><field><name>fecha_carga</name><type>system date (fixed)</type></field></fields><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>380</xloc><yloc>80</yloc><draw>Y</draw></GUI></step><step><name>out_fact_evaluacion</name><type>TableOutput</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><connection>conn_rrhh_dw</connection><schema>dwh</schema><table>fact_evaluacion</table><commit>1000</commit><truncate>Y</truncate><ignore_errors>N</ignore_errors><use_batch>Y</use_batch><specify_fields>N</specify_fields><partitioning_enabled>N</partitioning_enabled><partitioning_field/><partitioning_daily>N</partitioning_daily><partitioning_monthly>Y</partitioning_monthly><tablename_in_field>N</tablename_in_field><tablename_field/><tablename_in_table>Y</tablename_in_table><return_keys>N</return_keys><return_field/><fields></fields><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>640</xloc><yloc>80</yloc><draw>Y</draw></GUI></step><step><name>tin_asistencia</name><type>TableInput</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><connection>conn_rrhh_dw</connection><sql>WITH cand AS (
+    SELECT a.asistencia_id,
+           h.departamento_id,
+           h.cargo_id,
+           ROW_NUMBER() OVER (
+               PARTITION BY a.asistencia_id
+               ORDER BY (h.fecha_inicio &lt;= a.fecha_registro) DESC,
+                        CASE WHEN h.fecha_inicio &lt;= a.fecha_registro THEN h.fecha_inicio END DESC NULLS LAST,
+                        h.fecha_inicio ASC
+           ) AS rn
+    FROM stg.registro_asistencia a
+    JOIN stg.historial_laboral h ON h.empleado_id = a.empleado_id
+)
+SELECT
+    a.asistencia_id,
+    de.empleado_key,
+    t.fecha_key                         AS fecha_key,
+    COALESCE(dd.departamento_key, -1)   AS departamento_key,
+    COALESCE(dg.cargo_key, -1)          AS cargo_key,
+    a.dias_ausencia,
+    a.horas_extra
+FROM stg.registro_asistencia a
+LEFT JOIN cand c                ON c.asistencia_id = a.asistencia_id AND c.rn = 1
+LEFT JOIN dwh.dim_empleado     de ON de.empleado_id     = a.empleado_id
+LEFT JOIN dwh.dim_tiempo       t  ON t.fecha            = a.fecha_registro
+LEFT JOIN dwh.dim_departamento dd ON dd.departamento_id = c.departamento_id
+LEFT JOIN dwh.dim_cargo        dg ON dg.cargo_id        = c.cargo_id</sql><limit>0</limit><lookup/><execute_each_row>N</execute_each_row><variables_active>N</variables_active><lazy_conversion_active>N</lazy_conversion_active><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>120</xloc><yloc>170</yloc><draw>Y</draw></GUI></step><step><name>fc_asistencia</name><type>SystemInfo</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><fields><field><name>fecha_carga</name><type>system date (fixed)</type></field></fields><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>380</xloc><yloc>170</yloc><draw>Y</draw></GUI></step><step><name>out_fact_asistencia</name><type>TableOutput</type><description/><distribute>Y</distribute><custom_distribution/><copies>1</copies><partitioning><method>none</method><schema_name/></partitioning><connection>conn_rrhh_dw</connection><schema>dwh</schema><table>fact_asistencia</table><commit>1000</commit><truncate>Y</truncate><ignore_errors>N</ignore_errors><use_batch>Y</use_batch><specify_fields>N</specify_fields><partitioning_enabled>N</partitioning_enabled><partitioning_field/><partitioning_daily>N</partitioning_daily><partitioning_monthly>Y</partitioning_monthly><tablename_in_field>N</tablename_in_field><tablename_field/><tablename_in_table>Y</tablename_in_table><return_keys>N</return_keys><return_field/><fields></fields><cluster_schema/><remotesteps><input></input><output></output></remotesteps><GUI><xloc>640</xloc><yloc>170</yloc><draw>Y</draw></GUI></step><step_error_handling></step_error_handling><slave-step-copy-partition-distribution></slave-step-copy-partition-distribution><slave_transformation>N</slave_transformation></transformation>

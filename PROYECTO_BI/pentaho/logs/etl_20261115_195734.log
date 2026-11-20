@@ -1,0 +1,169 @@
+Iniciando ETL: dom 15 nov 2026 19:57:34 CST
+#######################################################################
+WARNING:  no libwebkitgtk-1.0 detected, some features will be unavailable
+    Consider installing the package with apt-get or yum.
+    e.g. 'sudo apt-get install libwebkitgtk-1.0-0'
+#######################################################################
+Nov 15, 2026 7:57:35 PM sun.util.locale.provider.LocaleProviderAdapter <clinit>
+INFO: Invalid locale provider adapter "COMPAT" ignored.
+Nov 15, 2026 7:57:35 PM sun.util.locale.provider.LocaleProviderAdapter <clinit>
+WARNING: COMPAT locale provider has been removed
+2026-11-15 19:57:36.049 - Kitchen - Logging is at level : Basic
+2026-11-15 19:57:36.064 - Kitchen - Start of run.
+2026-11-15 19:57:37.303 - job_main_rrhh - Start of job execution
+2026-11-15 19:57:37.400 - job_main_rrhh - Starting entry [Replica Excel a stg]
+2026-11-15 19:57:37.507 - Replica Excel a stg - Using run configuration [Pentaho local]
+2026-11-15 19:57:37.520 - Carte - Installing timer to purge stale objects after 1440 minutes.
+2026-11-15 19:57:37.521 - Replica Excel a stg - Iniciado despacho de la transformaci�n [trf_replica_stg]
+2026-11-15 19:57:37.562 - out_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.562 - out_pais.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.562 - out_registro_asistencia.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.562 - out_evaluacion_desempeno.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.562 - out_departamento.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.562 - out_condicion_laboral.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.563 - out_tipo_contrato.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.563 - out_vacaciones.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.563 - out_satisfaccion_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.563 - out_capacitacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.564 - out_baja_empleado.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.564 - out_contratacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.564 - out_historial_laboral.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.564 - out_cargo.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:37.564 - out_ciudad.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:39.650 - xls_tipo_contrato.0 - Procesamiento finalizado (I=4, O=0, R=0, W=4, U=0, E=0)
+2026-11-15 19:57:39.653 - xls_cargo.0 - Procesamiento finalizado (I=10, O=0, R=0, W=10, U=0, E=0)
+2026-11-15 19:57:39.659 - xls_pais.0 - Procesamiento finalizado (I=5, O=0, R=0, W=5, U=0, E=0)
+2026-11-15 19:57:39.662 - xls_departamento.0 - Procesamiento finalizado (I=7, O=0, R=0, W=7, U=0, E=0)
+2026-11-15 19:57:39.663 - xls_condicion_laboral.0 - Procesamiento finalizado (I=5, O=0, R=0, W=5, U=0, E=0)
+2026-11-15 19:57:39.669 - fecha_carga_pais.0 - Procesamiento finalizado (I=0, O=0, R=5, W=5, U=0, E=0)
+2026-11-15 19:57:39.671 - fecha_carga_tipo_contrato.0 - Procesamiento finalizado (I=0, O=0, R=4, W=4, U=0, E=0)
+2026-11-15 19:57:39.673 - fecha_carga_cargo.0 - Procesamiento finalizado (I=0, O=0, R=10, W=10, U=0, E=0)
+2026-11-15 19:57:39.673 - fecha_carga_departamento.0 - Procesamiento finalizado (I=0, O=0, R=7, W=7, U=0, E=0)
+2026-11-15 19:57:39.674 - fecha_carga_condicion_laboral.0 - Procesamiento finalizado (I=0, O=0, R=5, W=5, U=0, E=0)
+2026-11-15 19:57:39.682 - xls_ciudad.0 - Procesamiento finalizado (I=12, O=0, R=0, W=12, U=0, E=0)
+2026-11-15 19:57:39.684 - fecha_carga_ciudad.0 - Procesamiento finalizado (I=0, O=0, R=12, W=12, U=0, E=0)
+2026-11-15 19:57:39.701 - xls_baja_empleado.0 - Procesamiento finalizado (I=23, O=0, R=0, W=23, U=0, E=0)
+2026-11-15 19:57:39.706 - fecha_carga_baja_empleado.0 - Procesamiento finalizado (I=0, O=0, R=23, W=23, U=0, E=0)
+2026-11-15 19:57:39.803 - xls_empleado.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-15 19:57:39.805 - fecha_carga_empleado.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:39.814 - xls_capacitacion.0 - Procesamiento finalizado (I=196, O=0, R=0, W=196, U=0, E=0)
+2026-11-15 19:57:39.816 - fecha_carga_capacitacion.0 - Procesamiento finalizado (I=0, O=0, R=196, W=196, U=0, E=0)
+2026-11-15 19:57:39.849 - xls_vacaciones.0 - Procesamiento finalizado (I=207, O=0, R=0, W=207, U=0, E=0)
+2026-11-15 19:57:39.851 - fecha_carga_vacaciones.0 - Procesamiento finalizado (I=0, O=0, R=207, W=207, U=0, E=0)
+2026-11-15 19:57:39.855 - xls_evaluacion_desempeno.0 - Procesamiento finalizado (I=281, O=0, R=0, W=281, U=0, E=0)
+2026-11-15 19:57:39.857 - fecha_carga_evaluacion_desempeno.0 - Procesamiento finalizado (I=0, O=0, R=281, W=281, U=0, E=0)
+2026-11-15 19:57:39.873 - xls_contratacion.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-15 19:57:39.875 - fecha_carga_contratacion.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:39.882 - xls_satisfaccion_empleado.0 - Procesamiento finalizado (I=272, O=0, R=0, W=272, U=0, E=0)
+2026-11-15 19:57:39.887 - xls_historial_laboral.0 - Procesamiento finalizado (I=176, O=0, R=0, W=176, U=0, E=0)
+2026-11-15 19:57:39.888 - fecha_carga_satisfaccion_empleado.0 - Procesamiento finalizado (I=0, O=0, R=272, W=272, U=0, E=0)
+2026-11-15 19:57:39.891 - fecha_carga_historial_laboral.0 - Procesamiento finalizado (I=0, O=0, R=176, W=176, U=0, E=0)
+2026-11-15 19:57:39.916 - xls_registro_asistencia.0 - Procesamiento finalizado (I=450, O=0, R=0, W=450, U=0, E=0)
+2026-11-15 19:57:39.918 - fecha_carga_registro_asistencia.0 - Procesamiento finalizado (I=0, O=0, R=450, W=450, U=0, E=0)
+2026-11-15 19:57:40.420 - out_tipo_contrato.0 - Procesamiento finalizado (I=0, O=4, R=4, W=4, U=0, E=0)
+2026-11-15 19:57:40.421 - out_baja_empleado.0 - Procesamiento finalizado (I=0, O=23, R=23, W=23, U=0, E=0)
+2026-11-15 19:57:40.421 - out_ciudad.0 - Procesamiento finalizado (I=0, O=12, R=12, W=12, U=0, E=0)
+2026-11-15 19:57:40.422 - out_pais.0 - Procesamiento finalizado (I=0, O=5, R=5, W=5, U=0, E=0)
+2026-11-15 19:57:40.422 - out_cargo.0 - Procesamiento finalizado (I=0, O=10, R=10, W=10, U=0, E=0)
+2026-11-15 19:57:40.422 - out_departamento.0 - Procesamiento finalizado (I=0, O=7, R=7, W=7, U=0, E=0)
+2026-11-15 19:57:40.421 - out_condicion_laboral.0 - Procesamiento finalizado (I=0, O=5, R=5, W=5, U=0, E=0)
+2026-11-15 19:57:40.463 - out_capacitacion.0 - Procesamiento finalizado (I=0, O=196, R=196, W=196, U=0, E=0)
+2026-11-15 19:57:40.474 - out_evaluacion_desempeno.0 - Procesamiento finalizado (I=0, O=281, R=281, W=281, U=0, E=0)
+2026-11-15 19:57:40.478 - out_contratacion.0 - Procesamiento finalizado (I=0, O=150, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:40.480 - out_satisfaccion_empleado.0 - Procesamiento finalizado (I=0, O=272, R=272, W=272, U=0, E=0)
+2026-11-15 19:57:40.481 - out_empleado.0 - Procesamiento finalizado (I=0, O=150, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:40.484 - out_historial_laboral.0 - Procesamiento finalizado (I=0, O=176, R=176, W=176, U=0, E=0)
+2026-11-15 19:57:40.485 - out_vacaciones.0 - Procesamiento finalizado (I=0, O=207, R=207, W=207, U=0, E=0)
+2026-11-15 19:57:40.492 - out_registro_asistencia.0 - Procesamiento finalizado (I=0, O=450, R=450, W=450, U=0, E=0)
+2026-11-15 19:57:40.500 - job_main_rrhh - Starting entry [Dim tiempo]
+2026-11-15 19:57:40.541 - Dim tiempo - Using run configuration [Pentaho local]
+2026-11-15 19:57:40.542 - Dim tiempo - Iniciado despacho de la transformaci�n [trf_dim_tiempo]
+2026-11-15 19:57:40.572 - gen_dias.0 - Procesamiento finalizado (I=0, O=0, R=0, W=5844, U=0, E=0)
+2026-11-15 19:57:40.584 - seq_n.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:40.707 - calc_fecha.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:40.855 - java_campos.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:40.858 - map_mes.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:40.860 - map_dia.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:40.862 - fecha_carga.0 - Procesamiento finalizado (I=0, O=0, R=5844, W=5844, U=0, E=0)
+2026-11-15 19:57:42.440 - upd_dim_tiempo.0 - Procesamiento finalizado (I=5844, O=0, R=5844, W=5844, U=5844, E=0)
+2026-11-15 19:57:42.442 - job_main_rrhh - Starting entry [Dim simples]
+2026-11-15 19:57:42.471 - Dim simples - Using run configuration [Pentaho local]
+2026-11-15 19:57:42.472 - Dim simples - Iniciado despacho de la transformaci�n [trf_dim_simples]
+2026-11-15 19:57:42.484 - grid_departamento_desc.0 - Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-11-15 19:57:42.487 - fc_departamento_desc.0 - Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-11-15 19:57:42.492 - grid_cargo_desc.0 - Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-11-15 19:57:42.500 - fc_cargo_desc.0 - Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-11-15 19:57:42.503 - grid_tipo_contrato_desc.0 - Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-11-15 19:57:42.510 - fc_tipo_contrato_desc.0 - Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-11-15 19:57:42.512 - grid_condicion_laboral_desc.0 - Procesamiento finalizado (I=0, O=0, R=0, W=1, U=0, E=0)
+2026-11-15 19:57:42.518 - fc_condicion_laboral_desc.0 - Procesamiento finalizado (I=0, O=0, R=1, W=1, U=0, E=0)
+2026-11-15 19:57:42.524 - tin_cargo.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.525 - tin_cargo.0 - Procesamiento finalizado (I=10, O=0, R=0, W=10, U=0, E=0)
+2026-11-15 19:57:42.527 - fc_cargo.0 - Procesamiento finalizado (I=0, O=0, R=10, W=10, U=0, E=0)
+2026-11-15 19:57:42.531 - tin_departamento.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.534 - tin_departamento.0 - Procesamiento finalizado (I=7, O=0, R=0, W=7, U=0, E=0)
+2026-11-15 19:57:42.535 - fc_departamento.0 - Procesamiento finalizado (I=0, O=0, R=7, W=7, U=0, E=0)
+2026-11-15 19:57:42.541 - tin_condicion_laboral.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.542 - tin_tipo_contrato.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.544 - upd_departamento_desc.0 - Procesamiento finalizado (I=1, O=0, R=1, W=1, U=1, E=0)
+2026-11-15 19:57:42.545 - fc_tipo_contrato.0 - Procesamiento finalizado (I=0, O=0, R=4, W=4, U=0, E=0)
+2026-11-15 19:57:42.545 - tin_condicion_laboral.0 - Procesamiento finalizado (I=5, O=0, R=0, W=5, U=0, E=0)
+2026-11-15 19:57:42.547 - fc_condicion_laboral.0 - Procesamiento finalizado (I=0, O=0, R=5, W=5, U=0, E=0)
+2026-11-15 19:57:42.547 - tin_tipo_contrato.0 - Procesamiento finalizado (I=4, O=0, R=0, W=4, U=0, E=0)
+2026-11-15 19:57:42.549 - upd_cargo_desc.0 - Procesamiento finalizado (I=1, O=0, R=1, W=1, U=1, E=0)
+2026-11-15 19:57:42.552 - upd_cargo.0 - Procesamiento finalizado (I=10, O=0, R=10, W=10, U=10, E=0)
+2026-11-15 19:57:42.558 - upd_tipo_contrato_desc.0 - Procesamiento finalizado (I=1, O=0, R=1, W=1, U=1, E=0)
+2026-11-15 19:57:42.559 - upd_departamento.0 - Procesamiento finalizado (I=7, O=0, R=7, W=7, U=7, E=0)
+2026-11-15 19:57:42.565 - upd_tipo_contrato.0 - Procesamiento finalizado (I=4, O=0, R=4, W=4, U=4, E=0)
+2026-11-15 19:57:42.568 - upd_condicion_laboral_desc.0 - Procesamiento finalizado (I=1, O=0, R=1, W=1, U=1, E=0)
+2026-11-15 19:57:42.571 - upd_condicion_laboral.0 - Procesamiento finalizado (I=5, O=0, R=5, W=5, U=5, E=0)
+2026-11-15 19:57:42.574 - job_main_rrhh - Starting entry [Dim empleado]
+2026-11-15 19:57:42.592 - Dim empleado - Using run configuration [Pentaho local]
+2026-11-15 19:57:42.593 - Dim empleado - Iniciado despacho de la transformaci�n [trf_dim_empleado]
+2026-11-15 19:57:42.629 - tin_empleado.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.630 - tin_empleado.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-15 19:57:42.631 - fc_empleado.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:42.727 - upd_dim_empleado.0 - Procesamiento finalizado (I=150, O=0, R=150, W=150, U=150, E=0)
+2026-11-15 19:57:42.729 - job_main_rrhh - Starting entry [Hechos 1 (contratacion, historial, baja)]
+2026-11-15 19:57:42.748 - Hechos 1 (contratacion, historial, baja) - Using run configuration [Pentaho local]
+2026-11-15 19:57:42.749 - Hechos 1 (contratacion, historial, baja) - Iniciado despacho de la transformaci�n [trf_facts_1]
+2026-11-15 19:57:42.751 - out_fact_contratacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:42.752 - out_fact_historial_laboral.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:42.753 - out_fact_baja.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:42.802 - tin_contratacion.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.804 - tin_contratacion.0 - Procesamiento finalizado (I=150, O=0, R=0, W=150, U=0, E=0)
+2026-11-15 19:57:42.805 - tin_historial.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.805 - fc_contratacion.0 - Procesamiento finalizado (I=0, O=0, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:42.808 - fc_historial.0 - Procesamiento finalizado (I=0, O=0, R=176, W=176, U=0, E=0)
+2026-11-15 19:57:42.810 - tin_historial.0 - Procesamiento finalizado (I=176, O=0, R=0, W=176, U=0, E=0)
+2026-11-15 19:57:42.811 - tin_baja.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.812 - tin_baja.0 - Procesamiento finalizado (I=23, O=0, R=0, W=23, U=0, E=0)
+2026-11-15 19:57:42.813 - fc_baja.0 - Procesamiento finalizado (I=0, O=0, R=23, W=23, U=0, E=0)
+2026-11-15 19:57:42.859 - out_fact_baja.0 - Procesamiento finalizado (I=0, O=23, R=23, W=23, U=0, E=0)
+2026-11-15 19:57:42.876 - out_fact_contratacion.0 - Procesamiento finalizado (I=0, O=150, R=150, W=150, U=0, E=0)
+2026-11-15 19:57:42.890 - out_fact_historial_laboral.0 - Procesamiento finalizado (I=0, O=176, R=176, W=176, U=0, E=0)
+2026-11-15 19:57:42.892 - job_main_rrhh - Starting entry [Hechos 2 (evaluacion, asistencia)]
+2026-11-15 19:57:42.907 - Hechos 2 (evaluacion, asistencia) - Using run configuration [Pentaho local]
+2026-11-15 19:57:42.908 - Hechos 2 (evaluacion, asistencia) - Iniciado despacho de la transformaci�n [trf_facts_2]
+2026-11-15 19:57:42.910 - out_fact_evaluacion.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:42.910 - out_fact_asistencia.0 - Connected to database [conn_rrhh_dw] (commit=1000)
+2026-11-15 19:57:42.946 - tin_asistencia.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.946 - tin_evaluacion.0 - Finished reading query, closing connection
+2026-11-15 19:57:42.947 - tin_asistencia.0 - Procesamiento finalizado (I=450, O=0, R=0, W=450, U=0, E=0)
+2026-11-15 19:57:42.948 - tin_evaluacion.0 - Procesamiento finalizado (I=281, O=0, R=0, W=281, U=0, E=0)
+2026-11-15 19:57:42.948 - fc_evaluacion.0 - Procesamiento finalizado (I=0, O=0, R=281, W=281, U=0, E=0)
+2026-11-15 19:57:42.948 - fc_asistencia.0 - Procesamiento finalizado (I=0, O=0, R=450, W=450, U=0, E=0)
+2026-11-15 19:57:43.012 - out_fact_evaluacion.0 - Procesamiento finalizado (I=0, O=281, R=281, W=281, U=0, E=0)
+2026-11-15 19:57:43.039 - out_fact_asistencia.0 - Procesamiento finalizado (I=0, O=450, R=450, W=450, U=0, E=0)
+2026-11-15 19:57:43.041 - job_main_rrhh - Starting entry [ETL exitoso]
+2026-11-15 19:57:43.043 - job_main_rrhh - Finished job entry [ETL exitoso] (result=[true])
+2026-11-15 19:57:43.043 - job_main_rrhh - Finished job entry [Hechos 2 (evaluacion, asistencia)] (result=[true])
+2026-11-15 19:57:43.043 - job_main_rrhh - Finished job entry [Hechos 1 (contratacion, historial, baja)] (result=[true])
+2026-11-15 19:57:43.043 - job_main_rrhh - Finished job entry [Dim empleado] (result=[true])
+2026-11-15 19:57:43.044 - job_main_rrhh - Finished job entry [Dim simples] (result=[true])
+2026-11-15 19:57:43.044 - job_main_rrhh - Finished job entry [Dim tiempo] (result=[true])
+2026-11-15 19:57:43.044 - job_main_rrhh - Finished job entry [Replica Excel a stg] (result=[true])
+2026-11-15 19:57:43.044 - job_main_rrhh - Job execution finished
+2026-11-15 19:57:43.047 - Kitchen - Finished!
+2026-11-15 19:57:43.048 - Kitchen - Start=2026/11/15 19:57:37.300, Stop=2026/11/15 19:57:43.048
+2026-11-15 19:57:43.048 - Kitchen - Processing ended after 5 seconds.
