@@ -1,0 +1,27 @@
+# Base de datos rrhh_dw lista para usar (PostgreSQL en Docker).
+# La primera vez que arranca, carga automaticamente el volcado que este en ./init
+name: rrhh
+
+services:
+  db:
+    image: postgres:${PG_VERSION:-16}
+    container_name: rrhh_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-postgres}
+      POSTGRES_DB: rrhh_dw
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    volumes:
+      - rrhh_pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rrhh_dw"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  rrhh_pgdata:
