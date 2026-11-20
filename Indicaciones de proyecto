@@ -1,0 +1,297 @@
+# Plan de trabajo: dashboard y respuestas
+
+Proyecto final de *Tecnologías para la Inteligencia de Negocios* (UCA).
+**Entrega: lunes 23 de noviembre, 4:30 pm** (carpeta comprimida en el e-campus). Meta interna: entregar antes de las 12:00.
+
+El ETL ya está terminado (lo hizo Luis). Lo que falta es el **dashboard**, las **respuestas a los análisis** y el **empaquetado final**. Este documento dice qué hace cada quien.
+
+> **Supuesto:** el dashboard se hace en **Power BI Desktop** (todos los demás usan Windows). Si el equipo decide otra herramienta, avisen: las definiciones de cálculo siguen valiendo, solo cambia la sintaxis.
+>
+> **Nombre del equipo:** ____________ (definir hoy; va en el archivo `Proyecto<NombreEquipo>` y dentro del dashboard).
+
+---
+
+## 1. Reparto
+
+El enunciado pide 10 análisis obligatorios y 5 extras (uno por integrante).
+
+| Integrante | Análisis obligatorios | Análisis extra | Otras tareas |
+|---|---|---|---|
+| **Germán** | 7 y 8 | Costo laboral con bonos | **Base del reporte** (modelo, medidas, tema, KPIs, filtros), **integración final**, consolidación de respuestas y empaquetado |
+| **Jonathan** | 1, 2 y 3 | Rotación y motivos de baja | |
+| **Roberto** | 4, 5 y 6 | Ausentismo | |
+| **Isaac** | 9 y 10 | Desempeño vs. salario y satisfacción de empleados | Prueba de instalación desde cero |
+| **Luis** | — | — | ETL (completado) |
+
+Pueden intercambiar análisis entre ustedes si lo prefieren, siempre que avisen y cada análisis tenga un responsable.
+
+---
+
+## 2. Calendario
+
+| Cuándo | Qué |
+|---|---|
+| **Jue 19 (hoy)** | Todos configuran el ETL en su máquina y verifican los conteos (`INSTRUCCIONES_CONFIGURACION.md`). Se define el nombre del equipo. Germán empieza la base. |
+| **Vie 20, mediodía** | Germán comparte `Base.pbix` (modelo, medidas, tema, KPIs, filtros). |
+| **Vie 20 tarde y sáb 21** | Cada quien construye sus páginas y escribe sus respuestas. |
+| **Sáb 21, 9:00 pm** | Entrega de páginas y respuestas (a Germán). |
+| **Dom 22** | Germán integra todo en un solo archivo, consolida las respuestas y arma la carpeta. Revisión de diseño en equipo. Isaac prueba la instalación desde cero. |
+| **Lun 23, mañana** | Revisión final y **entrega antes de las 12:00**. |
+
+---
+
+## 3. Paso 0 (todos): dejar el ETL funcionando
+
+Seguir `INSTRUCCIONES_CONFIGURACION.md` y confirmar en el grupo que los conteos coinciden. Sin esto no pueden construir nada.
+
+Los números son estables entre el 7 de noviembre y el 27 de diciembre (126 empleados activos), así que todos deben ver las mismas cifras sin importar el día en que corrieron el ETL.
+
+---
+
+## 4. Germán: base del reporte
+### 4.1 Conexión
+
+*Obtener datos → PostgreSQL*. Servidor `localhost`, base `rrhh_dw`, modo **Importar**. Cargar **solo** las tablas del esquema `dwh`:
+
+`dim_tiempo`, `dim_empleado`, `dim_departamento`, `dim_cargo`, `dim_tipo_contrato`, `dim_condicion_laboral`, `fact_contratacion`, `fact_historial_laboral`, `fact_baja`, `fact_evaluacion`, `fact_asistencia`.
+
+No cargar `dwh.parametros` ni nada de `stg`. Si Power BI pide el proveedor Npgsql, instalarlo.
+
+### 4.2 Relaciones (muchos a uno, dirección única, de la dimensión al hecho)
+
+Verificar que Power BI no cree relaciones de más ni invertidas.
+
+| Tabla de hechos | Llave | Dimensión |
+|---|---|---|
+| `fact_contratacion` | `empleado_key` | `dim_empleado` |
+| | `fecha_contratacion_key` | `dim_tiempo` |
+| | `departamento_key`, `cargo_key`, `tipo_contrato_key`, `condicion_laboral_key` | sus dimensiones |
+| `fact_historial_laboral` | `empleado_key` | `dim_empleado` |
+| | `fecha_inicio_key` | `dim_tiempo` (**activa**) |
+| | `fecha_fin_key` | `dim_tiempo` (**inactiva**) |
+| | `departamento_key`, `cargo_key`, `tipo_contrato_key`, `condicion_laboral_key` | sus dimensiones |
+| `fact_baja` | `empleado_key` | `dim_empleado` |
+| | `fecha_baja_key` | `dim_tiempo` |
+| | `tipo_contrato_key`, `departamento_key`, `cargo_key` | sus dimensiones |
+| `fact_evaluacion` | `empleado_key` | `dim_empleado` |
+| | `fecha_key` | `dim_tiempo` |
+| | `departamento_key`, `cargo_key` | sus dimensiones |
+| `fact_asistencia` | `empleado_key` | `dim_empleado` |
+| | `fecha_key` | `dim_tiempo` |
+| | `departamento_key`, `cargo_key` | sus dimensiones |
+
+**Limitación conocida:** `fact_baja`, `fact_evaluacion` y `fact_asistencia` no tienen llave de condición laboral, así que el filtro de **modalidad de trabajo** no afecta esas páginas. Anótenlo en las indicaciones. Si el equipo quiere resolverlo, Luis puede agregar la llave al ETL.
+
+### 4.3 Medidas comunes
+
+Crear una tabla vacía `_Medidas` y poner ahí todas las medidas. **Los nombres deben ser exactamente estos**, para que las páginas se puedan combinar sin romperse.
+
+```dax
+Empleados Activos =
+CALCULATE(
+    DISTINCTCOUNT(fact_historial_laboral[empleado_key]),
+    fact_historial_laboral[es_vigente] = 1,
+    dim_empleado[es_activo] = 1
+)
+
+Activos Hombres =
+CALCULATE([Empleados Activos], dim_empleado[genero] = "Masculino")
+
+Activos Mujeres =
+CALCULATE([Empleados Activos], dim_empleado[genero] = "Femenino")
+
+Salario Promedio Activos =
+CALCULATE(
+    AVERAGE(fact_historial_laboral[salario_mensual]),
+    fact_historial_laboral[es_vigente] = 1,
+    dim_empleado[es_activo] = 1
+)
+
+Masa Salarial =
+CALCULATE(
+    SUM(fact_historial_laboral[salario_mensual]),
+    fact_historial_laboral[es_vigente] = 1,
+    dim_empleado[es_activo] = 1
+)
+
+Edad Promedio Activos =
+CALCULATE(
+    AVERAGEX(fact_historial_laboral, RELATED(dim_empleado[edad])),
+    fact_historial_laboral[es_vigente] = 1,
+    dim_empleado[es_activo] = 1
+)
+
+Contrataciones = SUM(fact_contratacion[cantidad])
+
+Bajas = SUM(fact_baja[cantidad])
+
+Empleados Históricos = DISTINCTCOUNT(fact_historial_laboral[empleado_key])
+
+Tasa de Bajas = DIVIDE([Bajas], [Empleados Históricos])
+
+Horas Extra = SUM(fact_asistencia[horas_extra])
+
+Días de Ausencia = SUM(fact_asistencia[dias_ausencia])
+
+Desempeño Promedio = AVERAGE(fact_evaluacion[puntuacion])
+
+Bono Mensual Activos =
+CALCULATE(
+    SUM(fact_historial_laboral[bono_monto]),
+    fact_historial_laboral[es_vigente] = 1,
+    dim_empleado[es_activo] = 1
+)
+
+Costo Laboral Total = [Masa Salarial] + [Bono Mensual Activos]
+
+Departamento Actual =
+MAXX(
+    FILTER(fact_historial_laboral, fact_historial_laboral[es_vigente] = 1),
+    RELATED(dim_departamento[nombre])
+)
+
+Cargo Actual =
+MAXX(
+    FILTER(fact_historial_laboral, fact_historial_laboral[es_vigente] = 1),
+    RELATED(dim_cargo[nombre])
+)
+
+Fecha de Actualización = MAX(fact_historial_laboral[fecha_carga])
+```
+
+Formato `$#,##0.00` en: Salario Promedio Activos, Masa Salarial, Bono Mensual Activos y Costo Laboral Total. **Todo campo de dinero debe llevar `$`** (requisito del enunciado).
+
+### 4.4 Tema, KPIs y filtros
+
+- **Tema personalizado:** colores y tipografía propios (*Vista → Temas → Personalizar tema actual*). Exportar el archivo `.json` y compartirlo para que todos lo importen (*Vista → Temas → Buscar temas*).
+- **Cinco KPIs** (tarjetas): Empleados Activos, Salario Promedio Activos, Activos Hombres, Activos Mujeres, Edad Promedio Activos.
+- **Seis filtros** (segmentaciones), sincronizados entre todas las páginas (*Vista → Sincronizar segmentaciones*):
+  - Fecha de contratación: `dim_empleado[fecha_contratacion]`
+  - País: `dim_empleado[pais]`
+  - Ciudad: `dim_empleado[ciudad]`
+  - Departamento: `dim_departamento[nombre]`
+  - Cargo: `dim_cargo[nombre]`
+  - Modalidad de trabajo: `dim_condicion_laboral[modalidad_trabajo]`
+- **Encabezado en todas las páginas:** nombre del equipo y la medida `Fecha de Actualización`.
+
+### 4.5 Entrega de la base
+
+`Base.pbix` con el modelo, las medidas, el tema, las tarjetas y las segmentaciones en una primera página. Luego avisa al grupo.
+
+---
+
+## 5. Cómo trabajan Jonathan, Roberto e Isaac
+
+1. Ejecuten el ETL y esperen `Base.pbix`.
+2. Hagan una **copia** del archivo y trabajen sobre ella (`Pagina_<Nombre>.pbix`).
+3. **No modifiquen el modelo ni las medidas comunes.** Si necesitan una medida nueva, créenla en `_Medidas` y **envíen su fórmula DAX por escrito** junto con su entrega: Germán debe agregarla al archivo final antes de pegar su página.
+4. Una página por análisis. El **título de cada página es la pregunta** del enunciado. Usen el tema compartido y respeten los formatos de dinero.
+5. Entreguen el `.pbix` y las respuestas a Germán antes del **sábado 9:00 pm**.
+
+---
+
+## 6. Análisis obligatorios: definiciones
+
+Todos los análisis hablan de **empleados activos** salvo que se indique lo contrario. "Activo" siempre significa `dim_empleado[es_activo] = 1`, y el salario actual es el del período vigente (`es_vigente = 1`). Las medidas de la sección 4.3 ya incluyen estas reglas.
+
+### Jonathan: análisis 1, 2 y 3
+
+| # | Pregunta | Cómo resolverlo |
+|---|---|---|
+| **1** | ¿En qué mes y año hubo más contrataciones? | `Contrataciones` por `dim_tiempo[anio_mes]`, ordenado de mayor a menor. Incluir todas las contrataciones registradas. |
+| **2** | Departamento con más y con menos activos; ¿coincide con la mayor y menor masa salarial? | `Empleados Activos` y `Masa Salarial` por `dim_departamento[nombre]`. Comparar los rankings y responder explícitamente si coinciden. |
+| **3** | Cargos activos con salario mensual promedio más alto y más bajo | `Salario Promedio Activos` por `dim_cargo[nombre]`. Mostrar los más altos y los más bajos. |
+
+**Extra: rotación y motivos de baja.** `Bajas` por `fact_baja[motivo_baja]` y por mes (`dim_tiempo[anio_mes]`). Agregar `Tasa de Bajas` por departamento.
+
+### Roberto: análisis 4, 5 y 6
+
+| # | Pregunta | Cómo resolverlo |
+|---|---|---|
+| **4** | Distribución de activos por género y diferencia de salario promedio | `Empleados Activos` y `Salario Promedio Activos` por `dim_empleado[genero]`. **Hay tres valores** (Masculino, Femenino y No especificado): mostrarlos los tres. |
+| **5** | Los 10 departamentos o cargos con más horas extra | `Horas Extra` por `dim_departamento[nombre]` y por `dim_cargo[nombre]`. Hay 7 departamentos y 10 cargos, así que el "top 10" es el ranking completo. |
+| **6** | País y ciudad con más activos; ¿coinciden con los de mayor masa salarial? | `Empleados Activos` y `Masa Salarial` por `dim_empleado[pais]` y por `dim_empleado[ciudad]`. Comparar rankings y responder si coinciden. |
+
+**Extra: ausentismo.** `Días de Ausencia` por departamento y por cargo, con su comparación frente a `Horas Extra`.
+
+### Germán: análisis 7 y 8 (además de la base)
+
+| # | Pregunta | Cómo resolverlo |
+|---|---|---|
+| **7** | Modalidad de trabajo predominante y comparación entre géneros | `Empleados Activos` por `dim_condicion_laboral[modalidad_trabajo]`, y cruzado con `dim_empleado[genero]` (barras agrupadas o matriz). |
+| **8** | Los 10 empleados activos con mayor desempeño, con su departamento y cargo | Tabla con `dim_empleado[nombre_completo]`, `Desempeño Promedio`, `Departamento Actual` y `Cargo Actual`. Filtro **Top N = 10** por `Desempeño Promedio`, con `dim_empleado[es_activo] = 1`. |
+
+**Criterio del análisis 8 (decidido):** la puntuación de cada empleado es el **promedio de todas sus evaluaciones**, no la última. Agregar la fecha de la última evaluación como columna de apoyo si se puede.
+
+**Extra: costo laboral con bonos.** `Masa Salarial`, `Bono Mensual Activos` y `Costo Laboral Total` por departamento.
+
+### Isaac: análisis 9 y 10
+
+| # | Pregunta | Cómo resolverlo |
+|---|---|---|
+| **9** | Tipo de contrato con más bajas y con menor proporción de abandono | `Bajas` y `Tasa de Bajas` por `dim_tipo_contrato[nombre]`. La tasa es bajas ÷ empleados históricos de ese tipo (ningún empleado cambia de tipo de contrato, así que el denominador es limpio). |
+| **10** | Distribución por grupo generacional y grupo predominante por departamento | `Empleados Activos` por `dim_empleado[grupo_generacional]`, y una matriz departamento × generación para ver cuál domina en cada uno. |
+
+**Extra propio: desempeño vs. salario.** Gráfico de dispersión por departamento con `Desempeño Promedio` y `Salario Promedio Activos`.
+
+**Tareas adicionales:**
+- Página de **satisfacción de empleados** (quinto análisis extra). Requiere la tabla `fact_satisfaccion`, que se agrega al ETL; se avisa al grupo cuando esté lista.
+- **Prueba de instalación desde cero** el domingo, siguiendo `INSTRUCCIONES_CONFIGURACION.md` al pie de la letra, y reportar cualquier paso que falle.
+
+---
+
+## 7. Respuestas escritas
+
+Cada integrante entrega a Germán, por cada análisis suyo, este formato:
+
+```
+Análisis N: <pregunta>
+Respuesta: <respuesta concreta con cifras>
+Visual: <nombre de la página y captura de pantalla>
+Observaciones: <hallazgos o aclaraciones, si las hay>
+```
+
+Reglas:
+- **Respuestas concretas con números**, no descripciones del gráfico. Ejemplo: "El departamento X tiene más activos (n); el de mayor masa salarial es Y, por lo tanto no coinciden."
+- Las preguntas con "¿coincide?" **deben responder sí o no**.
+- Se les pasarán **cifras de referencia calculadas directamente en SQL**. Compárenlas con lo que muestra su página: si no coinciden, hay un error en la medida o en el filtro, y hay que resolverlo antes de entregar.
+- Los números dependen de la fecha de carga. Con el ETL corrido entre el 7 de noviembre y el 27 de diciembre deben dar los mismos resultados.
+
+---
+
+## 8. Integración y entrega
+
+**Domingo 22 (Germán):**
+1. Agregar al archivo final las medidas extra que enviaron los demás.
+2. Copiar los visuales de cada página en el archivo final (en la página origen: `Ctrl+A`, `Ctrl+C`; en la página destino: `Ctrl+V`).
+3. Verificar que las segmentaciones, el encabezado y los formatos `$` estén en **todas** las páginas.
+4. Guardar como `Proyecto<NombreEquipo>.pbix`.
+
+**Domingo 22 (Germán, además):** consolidar las respuestas y armar la carpeta comprimida.
+
+**Contenido de la carpeta de entrega (según el enunciado):**
+
+| # | Archivo |
+|---|---|
+| 1 | Respuestas de los análisis solicitados |
+| 2 | `01_crear_objetos_rrhh.sql` |
+| 3 | Procesos ETL de Pentaho (`job_main_rrhh.kjb`, `job_replica_stg.kjb` y las 6 transformaciones `trf_*.ktr`) |
+| 4 | `ejecutar_etl.bat` (y `ejecutar_replica.bat`) |
+| 5 | `Proyecto<NombreEquipo>.pbix` |
+| 6 | Indicaciones de ejecución (`INSTRUCCIONES_CONFIGURACION.md`, más la nota de la limitación del filtro de modalidad) |
+
+---
+
+## 9. Checklist del enunciado (revisar antes de entregar)
+
+- [ ] 10 análisis obligatorios respondidos y visualizados
+- [ ] 5 análisis extra (uno por integrante)
+- [ ] 5 KPIs: activos, salario promedio, hombres, mujeres, edad promedio
+- [ ] 6 filtros: fecha de contratación, país, ciudad, departamento, cargo, modalidad
+- [ ] Fecha de actualización del reporte visible
+- [ ] Nombre del equipo visible
+- [ ] Formato `$` en todos los campos de dinero
+- [ ] Tema o diseño personalizado
+- [ ] Archivo nombrado `Proyecto<NombreEquipo>`
+- [ ] Diseño y organización cuidados (se evalúan)
+- [ ] Carpeta comprimida subida al e-campus antes del 23 de noviembre, 4:30 pm
