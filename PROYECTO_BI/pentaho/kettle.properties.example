@@ -1,0 +1,9 @@
+# Configuracion ETL - Proyecto BI RRHH
+
+DB_HOST=localhost
+DB_PORT=5440
+DB_NAME=rrhh_dw
+DB_USER=postgres
+DB_PASS=CAMBIAR_PASS
+RUTA_ORIGEN=C:/SOURCES/PROYECTO
+ARCHIVO_ORIGEN=base_origen_rrhh.xlsx
